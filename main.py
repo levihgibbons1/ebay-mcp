@@ -171,7 +171,7 @@ async def health(request: Request) -> JSONResponse:
 app = Starlette(
     routes=[
         Route("/health", health),
-        Mount("/", app=mcp.sse_app()),
+        Mount("/", app=mcp.http_app()),
     ]
 )
 
