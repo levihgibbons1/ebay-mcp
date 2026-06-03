@@ -168,11 +168,14 @@ async def health(request: Request) -> JSONResponse:
     return JSONResponse({"status": "ok", "service": "ebay-mcp"})
 
 
+_mcp_app = mcp.http_app()
+
 app = Starlette(
     routes=[
         Route("/health", health),
-        Mount("/", app=mcp.http_app()),
-    ]
+        Mount("/", app=_mcp_app),
+    ],
+    lifespan=_mcp_app.lifespan,
 )
 
 if __name__ == "__main__":
